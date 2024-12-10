@@ -1,0 +1,12 @@
+.model comparatore2b
+.inputs A1 A0 B1 B0
+.outputs O
+
+.search base/xnor1b.blif
+
+.subckt xnor1b A=A1 B=B1 O=X1
+.subckt xnor1b A=A0 B=B0 O=X0
+.names X1 X0 O
+11 1
+
+.end

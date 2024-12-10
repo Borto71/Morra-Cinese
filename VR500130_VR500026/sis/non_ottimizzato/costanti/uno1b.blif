@@ -1,0 +1,7 @@
+# Constante 1 ad un bit
+.model uno1b
+.outputs O
+.names O
+1
+
+.end

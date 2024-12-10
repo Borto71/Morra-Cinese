@@ -1,0 +1,28 @@
+.model fsm
+.inputs INIZIA fine_datapath 
+.outputs inizio_datapath
+
+.start_kiss
+.i 2		#numero di segnali di ingresso
+.o 1		#numero di segnali di uscita
+.s 3		#numero di stati
+.p 7		#numero di transizioni
+.r S		#stato di reset
+
+#tabella delle transizioni
+#(ingressi, stato presente, stato prossimo, uscita)
+1- S S 1
+0- S G 0
+00 G G 0
+01 G F 0
+01 F F 0
+1- G S 1
+1- F S 1
+
+.end_kiss
+
+# .code S 00
+# .code G 01
+# .code F 10
+
+.end

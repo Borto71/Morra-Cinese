@@ -1,0 +1,7 @@
+# Constante 0
+.model zero1b
+.outputs O
+.names O
+0
+
+.end

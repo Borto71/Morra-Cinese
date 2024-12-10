@@ -1,0 +1,44 @@
+.model fsm
+.inputs INIZIA fine_datapath
+.outputs inizio_datapath
+.latch    [1] LatchOut_v2   0
+.latch    [2] LatchOut_v3   1
+.start_kiss
+.i 2
+.o 1
+.p 7
+.s 3
+.r S
+1- S S 1
+0- S G 0
+00 G G 0
+01 G F 0
+1- G S 1
+01 F F 0
+1- F S 1
+.end_kiss
+.latch_order LatchOut_v2 LatchOut_v3
+.code S 01
+.code G 11
+.code F 10
+.names INIZIA [1]
+0 1
+.names INIZIA fine_datapath LatchOut_v2 [2]
+1-- 1
+-0- 1
+--0 1
+.names INIZIA inizio_datapath
+1 1
+.exdc 
+.inputs INIZIA fine_datapath LatchOut_v2 LatchOut_v3
+.outputs [1] [2] inizio_datapath
+.names INIZIA fine_datapath LatchOut_v2 LatchOut_v3 [1]
+--00 1
+00-0 1
+.names INIZIA fine_datapath LatchOut_v2 LatchOut_v3 [2]
+--00 1
+00-0 1
+.names INIZIA fine_datapath LatchOut_v2 LatchOut_v3 inizio_datapath
+--00 1
+00-0 1
+.end

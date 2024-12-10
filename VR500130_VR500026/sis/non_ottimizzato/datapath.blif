@@ -1,0 +1,128 @@
+.model datapath
+.inputs INIZIO PRIMO_1 PRIMO_0 SECONDO_1 SECONDO_0
+.outputs FINE MANCHE_1 MANCHE_0 PARTITA_1 PARTITA_0
+
+#Importo Multiplexer
+.search multiplexer/mux2in1b.blif
+.search multiplexer/mux2in2b.blif
+.search multiplexer/mux2in4b.blif
+.search multiplexer/mux4in1b.blif  
+.search multiplexer/mux4in2b.blif
+.search multiplexer/mux4in4b.blif
+.search multiplexer/mux2in5b.blif
+#Importo Registri
+.search registro/registro1b.blif
+.search registro/registro2b.blif
+.search registro/registro4b.blif
+.search registro/registro5b.blif
+#importo Sommatori
+.search sommatore/sommatore1b.blif
+.search sommatore/sommatore2b.blif
+.search sommatore/sommatore4b.blif
+.search sommatore/sommatore5b.blif
+#Importo Sottrattore
+.search sottrattore/sottrattore4b.blif
+#Importo Comparatori
+.search comparatore/comparatore4b.blif
+.search comparatore/comparatore5b.blif
+.search comparatore/comparatore2b.blif
+.search comparatore/minore4b.blif
+.search comparatore/maggiore4b.blif
+.search comparatore/maggiore5b.blif
+#Importo Porte Base
+.search base/or1b.blif
+.search base/not1b.blif
+
+#Definisco costanti Zero e Uno
+.subckt zero1b O=zero
+.subckt uno1b O=uno
+
+#----------
+
+# Dichiarazione vincitore senza controlli
+.search componenti/vincitore.blif
+.subckt mux2in2b X0=INIZIO a1=PRIMO_1 a0=PRIMO_0 b1=zero b0=zero o1=PRIMO_iniz_1 o0=PRIMO_iniz_0
+.subckt mux2in2b X0=INIZIO a1=SECONDO_1 a0=SECONDO_0 b1=zero b0=zero o1=SECONDO_iniz_1 o0=SECONDO_iniz_0
+
+.subckt vincitore p1=PRIMO_iniz_1 p0=PRIMO_iniz_0 s1=SECONDO_iniz_1 s0=SECONDO_iniz_0 o1=vincitore_1 o0=vincitore_0
+
+#----------
+
+# Controllo ultima mossa vincitore
+## LastMove player 1
+.subckt mux4in2b X1=vincitore_1 X0=vincitore_0 a1=LastMoveP1_1 a0=LastMoveP1_0 b1=PRIMO_1 b0=PRIMO_0 c1=zero c0=zero d1=zero d0=zero o1=muxLMP1_1 o0=muxLMP1_0
+.subckt mux2in2b X0=INIZIO a1=muxLMP1_1 a0=muxLMP1_0 b1=zero b0=zero o1=muxLMP1_iniz_1 o0=muxLMP1_iniz_0
+.subckt registro2b A1=muxLMP1_iniz_1 A0=muxLMP1_iniz_0 O1=LastMoveP1_1 O0=LastMoveP1_0
+.subckt comparatore2b A1=PRIMO_1 A0=PRIMO_0 B1=LastMoveP1_1 B0=LastMoveP1_0 O=compLMP1
+
+## LastMove player 2
+.subckt mux4in2b X1=vincitore_1 X0=vincitore_0 a1=LastMoveP2_1 a0=LastMoveP2_0 b1=zero b0=zero c1=SECONDO_1 c0=SECONDO_0 d1=zero d0=zero o1=muxLMP2_1 o0=muxLMP2_0
+.subckt mux2in2b X0=INIZIO a1=muxLMP2_1 a0=muxLMP2_0 b1=zero b0=zero o1=muxLMP2_iniz_1 o0=muxLMP2_iniz_0
+.subckt registro2b A1=muxLMP2_iniz_1 A0=muxLMP2_iniz_0 O1=LastMoveP2_1 O0=LastMoveP2_0
+.subckt comparatore2b A1=SECONDO_1 A0=SECONDO_0 B1=LastMoveP2_1 B0=LastMoveP2_0 O=compLMP2
+
+## OR tra due comparatori
+
+.subckt or1b A=compLMP1 B=compLMP2 O=orCompP1P2
+
+## Dichiarazione vincitore manche
+.subckt mux4in1b S1=vincitore_1 S0=vincitore_0 i3=uno i2=compLMP1 i1=compLMP2 i0=orCompP1P2 out=mancheValida
+
+.subckt mux2in2b X0=mancheValida a1=vincitore_1 a0=vincitore_0 b1=zero b0=zero o1=MANCHE_1 o0=MANCHE_0
+
+#----------
+
+# Dichiarazione Vincitore Partita
+## Calcolo vantaggio
+
+.subckt mux2in4b X0=INIZIO a3=muxVantaggio_3 a2=muxVantaggio_2 a1=muxVantaggio_1 a0=muxVantaggio_0 b3=zero b2=uno b1=zero b0=zero o3=muxVantaggio_iniz_3 o2=muxVantaggio_iniz_2 o1=muxVantaggio_iniz_1 o0=muxVantaggio_iniz_0
+.subckt registro4b A3=muxVantaggio_iniz_3 A2=muxVantaggio_iniz_2 A1=muxVantaggio_iniz_1 A0=muxVantaggio_iniz_0 O3=vantaggio_3 O2=vantaggio_2 O1=vantaggio_1 O0=vantaggio_0
+
+.subckt sottrattore4b A3=vantaggio_3 A2=vantaggio_2 A1=vantaggio_1 A0=vantaggio_0 B3=zero B2=zero B1=zero B0=uno O3=Vant_sottrattore_3 O2=Vant_sottrattore_2 O1=Vant_sottrattore_1 O0=Vant_sottrattore_0
+.subckt sommatore4b A3=zero A2=zero A1=zero A0=uno B3=vantaggio_3 B2=vantaggio_2 B1=vantaggio_1 B0=vantaggio_0 O3=Vant_sommatore_3 O2=Vant_sommatore_2 O1=Vant_sommatore_1 O0=Vant_sommatore_0
+.subckt mux4in4b X1=MANCHE_1 X0=MANCHE_0 a3=vantaggio_3 a2=vantaggio_2 a1=vantaggio_1 a0=vantaggio_0 b3=Vant_sottrattore_3 b2=Vant_sottrattore_2 b1=Vant_sottrattore_1 b0=Vant_sottrattore_0 c3=Vant_sommatore_3 c2=Vant_sommatore_2 c1=Vant_sommatore_1 c0=Vant_sommatore_0 d3=vantaggio_3 d2=vantaggio_2 d1=vantaggio_1 d0=vantaggio_0 o3=muxVantaggio_3 o2=muxVantaggio_2 o1=muxVantaggio_1 o0=muxVantaggio_0
+
+## Confronto vantaggio
+.subckt maggiore4b A3=muxVantaggio_3 A2=muxVantaggio_2 A1=muxVantaggio_1 A0=muxVantaggio_0 B3=zero B2=uno B1=zero B0=uno O=maggioreDi5
+.subckt minore4b A3=muxVantaggio_3 A2=muxVantaggio_2 A1=muxVantaggio_1 A0=muxVantaggio_0 B3=zero B2=zero B1=uno B0=uno O=minoreDi3
+
+## Dichiarazione vincitore se raggiunti round minimi
+.subckt mux2in2b X0=round_min_raggiunti a1=zero a0=zero b1=maggioreDi5 b0=minoreDi3 o1=muxVincitoreMin4Manche_1 o0=muxVincitoreMin4Manche_0
+
+## Confronto vantaggio a max round raggiunti per vedere chi ha vinto più round
+.subckt maggiore4b A3=muxVantaggio_3 A2=muxVantaggio_2 A1=muxVantaggio_1 A0=muxVantaggio_0 B3=zero B2=uno B1=zero B0=zero O=maggioreDi4
+.subckt minore4b A3=muxVantaggio_3 A2=muxVantaggio_2 A1=muxVantaggio_1 A0=muxVantaggio_0 B3=zero B2=uno B1=zero B0=zero O=minoreDi4
+
+.subckt mux4in2b X1=maggioreDi4 X0=minoreDi4 a1=uno a0=uno b1=maggioreDi4 b0=minoreDi4 c1=maggioreDi4 c0=minoreDi4 d1=zero d0=zero o1=muxVincitoreMaxManche_1 o0=muxVincitoreMaxManche_0
+
+## Dichiarazione vincitore PARTITA
+.subckt mux2in2b X0=round_max_raggiunti a1=muxVincitoreMin4Manche_1 a0=muxVincitoreMin4Manche_0 b1=muxVincitoreMaxManche_1 b0=muxVincitoreMaxManche_0 o1=PARTITA_fin_1 o0=PARTITA_fin_0
+.subckt mux2in2b X0=INIZIO a1=PARTITA_fin_1 a0=PARTITA_fin_0 b1=zero b0=zero o1=PARTITA_1 o0=PARTITA_0
+
+#----------
+
+## Conteggio round
+
+.subckt mux2in5b X0=INIZIO a4=sommaConteggio_4 a3=sommaConteggio_3 a2=sommaConteggio_2 a1=sommaConteggio_1 a0=sommaConteggio_0 b4=zero b3=zero b2=zero b1=zero b0=zero o4=Mux_RoundCount4 o3=Mux_RoundCount3 o2=Mux_RoundCount2 o1=Mux_RoundCount1 o0=Mux_RoundCount0
+#REGISTRO ROUNDCOUNT 
+.subckt registro5b A4=Mux_RoundCount4 A3=Mux_RoundCount3 A2=Mux_RoundCount2 A1=Mux_RoundCount1 A0=Mux_RoundCount0 O4=roundCount_4 O3=roundCount_3 O2=roundCount_2 O1=roundCount_1 O0=roundCount_0
+
+.subckt mux2in5b X0=mancheValida a4=zero a3=zero a2=zero a1=zero a0=uno b4=zero b3=zero b2=zero b1=zero b0=zero o4=MuxSommatore4 o3=MuxSommatore3 o2=MuxSommatore2 o1=MuxSommatore1 o0=MuxSommatore0
+#PRIMO SOMMATORE
+.subckt sommatore5b A4=roundCount_4 A3=roundCount_3 A2=roundCount_2 A1=roundCount_1 A0=roundCount_0 B4=MuxSommatore4 B3=MuxSommatore3 B2=MuxSommatore2 B1=MuxSommatore1 B0=MuxSommatore0 O4=sommaConteggio_4 O3=sommaConteggio_3 O2=sommaConteggio_2 O1=sommaConteggio_1 O0=sommaConteggio_0 
+.subckt maggiore5b A4=sommaConteggio_4 A3=sommaConteggio_3 A2=sommaConteggio_2 A1=sommaConteggio_1 A0=sommaConteggio_0 B4=zero B3=zero B2=zero B1=uno B0=uno O=round_min_raggiunti
+#SECONDO SOMMATORE 
+.subckt sommatore4b A3=PRIMO_1 A2=PRIMO_0 A1=SECONDO_1 A0=SECONDO_0 B3=zero B2=uno B1=zero B0=zero O3=outsum_PReSC_03 O2=outsum_PReSC_02 O1=outsum_PReSC_01 O0=outsum_PReSC_00 COUT=carry_out
+.subckt mux2in5b X0=INIZIO a4=Max_Round_Exit_4 a3=Max_Round_Exit_3 a2=Max_Round_Exit_2 a1=Max_Round_Exit_1 a0=Max_Round_Exit_0 b4=carry_out b3=outsum_PReSC_03 b2=outsum_PReSC_02 b1=outsum_PReSC_01 b0=outsum_PReSC_00 o4=Mux_Mround_exit4 o3=Mux_Mround_exit3 o2=Mux_Mround_exit2 o1=Mux_Mround_exit1 o0=Mux_Mround_exit0
+
+#REGISTRO MAXROUND
+.subckt registro5b A4=Mux_Mround_exit4 A3=Mux_Mround_exit3 A2=Mux_Mround_exit2 A1=Mux_Mround_exit1 A0=Mux_Mround_exit0 O4=Max_Round_Exit_4 O3=Max_Round_Exit_3 O2=Max_Round_Exit_2 O1=Max_Round_Exit_1 O0=Max_Round_Exit_0
+#COMPARATORE MAXROUND E SOMMATORE
+.subckt comparatore5b A4=sommaConteggio_4 A3=sommaConteggio_3 A2=sommaConteggio_2 A1=sommaConteggio_1 A0=sommaConteggio_0 B4=Max_Round_Exit_4 B3=Max_Round_Exit_3 B2=Max_Round_Exit_2 B1=Max_Round_Exit_1 B0=Max_Round_Exit_0 O=round_max_raggiunti
+
+#Generazione segnale fine
+.subckt comparatore2b A1=PARTITA_1 A0=PARTITA_0 B1=zero B0=zero O=fine_datapath
+.subckt not1b A=fine_datapath O=FINE
+
+
+.end

@@ -1,0 +1,9 @@
+.model mux4in4b
+.inputs X1 X0 a3 a2 a1 a0 b3 b2 b1 b0 c3 c2 c1 c0 d3 d2 d1 d0
+.outputs o3 o2 o1 o0
+.search multiplexer/mux4in1b.blif
+.subckt mux4in1b S1=X1 S0=X0 i3=a3 i2=b3 i1=c3 i0=d3 out=o3
+.subckt mux4in1b S1=X1 S0=X0 i3=a2 i2=b2 i1=c2 i0=d2 out=o2
+.subckt mux4in1b S1=X1 S0=X0 i3=a1 i2=b1 i1=c1 i0=d1 out=o1
+.subckt mux4in1b S1=X1 S0=X0 i3=a0 i2=b0 i1=c0 i0=d0 out=o0
+.end

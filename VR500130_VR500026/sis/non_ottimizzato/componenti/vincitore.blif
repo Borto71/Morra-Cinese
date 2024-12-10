@@ -1,0 +1,22 @@
+.model vincitore
+.inputs p1 p0 s1 s0
+.outputs o1 o0
+
+#SPECIFICO L'ON-SET.
+.names p1 p0 s1 s0 o1
+0101 1
+0110 1
+1010 1
+1011 1
+1101 1
+1111 1
+
+.names p1 p0 s1 s0 o0
+0101 1
+0111 1
+1001 1
+1010 1
+1110 1
+1111 1
+
+.end

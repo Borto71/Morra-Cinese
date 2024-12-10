@@ -1,0 +1,10 @@
+# PORTA LOGICA NOT
+
+.model not1b
+.inputs A
+.outputs O
+
+.names A O
+0 1
+
+.end

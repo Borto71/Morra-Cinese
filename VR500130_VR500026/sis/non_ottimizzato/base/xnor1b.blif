@@ -1,0 +1,15 @@
+# PORTA LOGICA XNOR
+#
+# 1 se A e' uguale a B, alrimenti 0
+#
+
+.model xnor1b
+.inputs A B
+.outputs O
+
+.names A B O
+00 1
+11 1
+
+.end
+

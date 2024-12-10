@@ -1,0 +1,15 @@
+.model comparatore5b
+.inputs A4 A3 A2 A1 A0 B4 B3 B2 B1 B0
+.outputs O
+
+.search base/xnor1b.blif
+
+.subckt xnor1b A=A4 B=B4 O=X4
+.subckt xnor1b A=A3 B=B3 O=X3
+.subckt xnor1b A=A2 B=B2 O=X2
+.subckt xnor1b A=A1 B=B1 O=X1
+.subckt xnor1b A=A0 B=B0 O=X0
+.names X4 X3 X2 X1 X0 O
+11111 1
+
+.end

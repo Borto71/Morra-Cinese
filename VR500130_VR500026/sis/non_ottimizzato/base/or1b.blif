@@ -1,0 +1,13 @@
+# PORTA LOGICA OR
+#
+# 1 se A e' diverso o uguale a B, altrimenti 0
+#
+
+.model or1b
+.inputs A B
+.outputs O
+
+.names A B O
+00 0
+
+.end

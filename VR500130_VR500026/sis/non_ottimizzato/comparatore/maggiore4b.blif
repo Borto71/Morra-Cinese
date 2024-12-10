@@ -1,0 +1,24 @@
+# Maggiore a 4 bit
+
+.model maggiore4b
+.inputs A3 A2 A1 A0 B3 B2 B1 B0 
+.outputs O 
+
+# Usa xor per trovare i bit diversi:
+# se due bit n sono diversi, l'ingresso
+# che ha bit n = 1 e' maggiore dell'altro
+
+.search base/xor1b.blif
+
+.subckt xor1b A=A3 B=B3 O=X3 
+.subckt xor1b A=A2 B=B2 O=X2 
+.subckt xor1b A=A1 B=B1 O=X1 
+.subckt xor1b A=A0 B=B0 O=X0 
+
+.names A3 A2 A1 A0 X3 X2 X1 X0 O 
+1---1--- 1
+-1--01-- 1 
+--1-001- 1 
+---10001 1
+
+.end

@@ -1,0 +1,11 @@
+.model FSMD
+.inputs INIZIA PRIMO_1 PRIMO_0 SECONDO_1 SECONDO_0
+.outputs MANCHE_1 MANCHE_0 PARTITA_1 PARTITA_0 
+
+.search datapath.blif
+.subckt datapath INIZIO=inizio_datapath PRIMO_1=PRIMO_1 PRIMO_0=PRIMO_0 SECONDO_1=SECONDO_1 SECONDO_0=SECONDO_0 FINE=fine_datapath MANCHE_1=MANCHE_1 MANCHE_0=MANCHE_0 PARTITA_1=PARTITA_1 PARTITA_0=PARTITA_0
+
+.search fsm.blif
+.subckt fsm INIZIA=INIZIA fine_datapath=fine_datapath inizio_datapath=inizio_datapath
+
+.end

@@ -1,0 +1,182 @@
+.model FSMD
+.inputs INIZIA PRIMO_1 PRIMO_0 SECONDO_1 SECONDO_0
+.outputs MANCHE_1 MANCHE_0 PARTITA_1 PARTITA_0
+.latch    muxVantaggio_iniz_3 vantaggio_3 re NIL 0
+.latch    muxVantaggio_iniz_2 vantaggio_2 re NIL 0
+.latch    muxVantaggio_iniz_1 vantaggio_1 re NIL 0
+.latch    muxVantaggio_iniz_0 vantaggio_0 re NIL 0
+.latch    muxLMP1_iniz_1 LastMoveP1_1 re NIL 0
+.latch    muxLMP1_iniz_0 LastMoveP1_0 re NIL 0
+.latch    muxLMP2_iniz_1 LastMoveP2_1 re NIL 0
+.latch    muxLMP2_iniz_0 LastMoveP2_0 re NIL 0
+.latch    Mux_RoundCount4 roundCount_4 re NIL 0
+.latch    Mux_RoundCount3 roundCount_3 re NIL 0
+.latch    Mux_RoundCount2 roundCount_2 re NIL 0
+.latch    Mux_RoundCount1 roundCount_1 re NIL 0
+.latch    Mux_RoundCount0 roundCount_0 re NIL 0
+.latch    Mux_Mround_exit4 Max_Round_Exit_4 re NIL 0
+.latch    Mux_Mround_exit3 Max_Round_Exit_3 re NIL 0
+.latch    Mux_Mround_exit2 Max_Round_Exit_2 re NIL 0
+.latch    Mux_Mround_exit1 Max_Round_Exit_1 re NIL 0
+.latch    Mux_Mround_exit0 Max_Round_Exit_0 re NIL 0
+.names mancheValida vincitore_1 MANCHE_1
+01 1
+.names mancheValida vincitore_0 MANCHE_0
+01 1
+.names INIZIA muxVantaggio_iniz_3 muxVantaggio_iniz_2 muxVantaggio_iniz_1 \
+round_max_raggiunti [459] PARTITA_1
+-1--1- 1
+-1---1 1
+0-1-1- 1
+--11-1 1
+.names PARTITA_1 muxVantaggio_iniz_3 muxVantaggio_iniz_2 muxVantaggio_iniz_1 \
+muxVantaggio_iniz_0 round_max_raggiunti [459] [465] PARTITA_0
+-00--1-- 1
+10-00--- 1
+-00---11 1
+.names PRIMO_1 PRIMO_0 SECONDO_1 SECONDO_0 vincitore_1 vincitore_0 \
+LastMoveP1_1 LastMoveP1_0 LastMoveP2_1 LastMoveP2_0 mancheValida
+----00---- 1
+11---111-- 1
+01---101-- 1
+10---110-- 1
+00---100-- 1
+--111---11 1
+--011---01 1
+--101---10 1
+--001---00 1
+.names INIZIA PRIMO_0 SECONDO_1 SECONDO_0 [462] [478] vincitore_1
+-11-1- 1
+-01--1 1
+--11-1 1
+0101-- 1
+.names INIZIA PRIMO_0 SECONDO_1 SECONDO_0 [463] [478] vincitore_0
+--10-1 1
+01-11- 1
+00-10- 1
+.names vincitore_1 vincitore_0 LastMoveP1_1 [467] [478] muxLMP1_iniz_1
+--11- 1
+01--1 1
+.names PRIMO_0 vincitore_1 vincitore_0 LastMoveP1_0 [467] muxLMP1_iniz_0
+---11 1
+101-- 1
+.names SECONDO_1 vincitore_1 LastMoveP2_1 [462] [467] muxLMP2_iniz_1
+--1-1 1
+11-1- 1
+.names SECONDO_0 vincitore_1 LastMoveP2_0 [462] [467] muxLMP2_iniz_0
+--1-1 1
+11-1- 1
+.names INIZIA vantaggio_3 vantaggio_2 vantaggio_0 muxVantaggio_iniz_2 \
+muxVantaggio_iniz_3
+-10-0 1
+0110- 1
+01-11 1
+-0110 1
+00001 1
+.names INIZIA vantaggio_2 vantaggio_1 muxVantaggio_iniz_1 muxVantaggio_iniz_0 \
+[465] muxVantaggio_iniz_2
+1----- 1
+-111-- 1
+-10--1 1
+-1--11 1
+-00--0 1
+-0100- 1
+.names INIZIA MANCHE_1 MANCHE_0 vantaggio_1 vantaggio_0 muxVantaggio_iniz_0 \
+[437] muxVantaggio_iniz_1
+--111-- 1
+-1-1-1- 1
+0--1--1 1
+-1-01-0 1
+-0-0-10 1
+.names INIZIA vantaggio_0 [437] muxVantaggio_iniz_0
+-00 1
+011 1
+.names roundCount_4 [470] sommaConteggio_4
+11 1
+00 1
+.names roundCount_3 [471] sommaConteggio_3
+11 1
+00 1
+.names roundCount_2 [472] sommaConteggio_2
+11 1
+00 1
+.names roundCount_1 [473] sommaConteggio_1
+11 1
+00 1
+.names sommaConteggio_2 sommaConteggio_1 K Max_Round_Exit_2 Max_Round_Exit_1 \
+Max_Round_Exit_0 [454] [455] round_max_raggiunti
+11111111 1
+01101111 1
+10110111 1
+00100111 1
+11011011 1
+01001011 1
+10010011 1
+00000011 1
+.names mancheValida roundCount_0 K
+11 1
+00 1
+.names INIZIA sommaConteggio_4 Mux_RoundCount4
+01 1
+.names INIZIA sommaConteggio_3 Mux_RoundCount3
+01 1
+.names INIZIA sommaConteggio_2 Mux_RoundCount2
+01 1
+.names INIZIA sommaConteggio_1 Mux_RoundCount1
+01 1
+.names INIZIA K Mux_RoundCount0
+01 1
+.names INIZIA PRIMO_1 PRIMO_0 Max_Round_Exit_4 Mux_Mround_exit4
+0--1 1
+111- 1
+.names INIZIA PRIMO_1 PRIMO_0 Max_Round_Exit_3 Mux_Mround_exit3
+0--1 1
+101- 1
+110- 1
+.names INIZIA PRIMO_0 Max_Round_Exit_2 Mux_Mround_exit2
+10- 1
+0-1 1
+.names INIZIA SECONDO_1 Max_Round_Exit_1 Mux_Mround_exit1
+11- 1
+0-1 1
+.names INIZIA SECONDO_0 Max_Round_Exit_0 Mux_Mround_exit0
+11- 1
+0-1 1
+.names MANCHE_1 MANCHE_0 [437]
+11 1
+00 1
+.names sommaConteggio_4 Max_Round_Exit_4 [454]
+11 1
+00 1
+.names sommaConteggio_3 Max_Round_Exit_3 [455]
+11 1
+00 1
+.names sommaConteggio_4 sommaConteggio_3 sommaConteggio_2 [459]
+1-- 1
+-1- 1
+--1 1
+.names INIZIA vincitore_0 [462]
+00 1
+.names PRIMO_1 SECONDO_1 [463]
+0- 1
+-1 1
+.names muxVantaggio_iniz_1 muxVantaggio_iniz_0 [465]
+0- 1
+-0 1
+.names vincitore_1 [462] [467]
+01 1
+.names sommaConteggio_3 roundCount_3 [470]
+1- 1
+-0 1
+.names sommaConteggio_2 roundCount_2 [471]
+1- 1
+-0 1
+.names sommaConteggio_1 roundCount_1 [472]
+1- 1
+-0 1
+.names mancheValida roundCount_0 [473]
+1- 1
+-0 1
+.names INIZIA PRIMO_1 [478]
+01 1
+.end

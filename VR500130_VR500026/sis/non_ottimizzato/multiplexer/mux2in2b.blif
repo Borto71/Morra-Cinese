@@ -1,0 +1,8 @@
+.model mux2in2b
+.inputs X0 a1 a0 b1 b0
+.outputs o1 o0
+.search multiplexer/mux2in1b.blif
+
+.subckt mux2in1b S0=X0 i1=a1 i0=b1 out=o1
+.subckt mux2in1b S0=X0 i1=a0 i0=b0 out=o0
+.end

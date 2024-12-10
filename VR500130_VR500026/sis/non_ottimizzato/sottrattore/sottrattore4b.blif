@@ -1,0 +1,31 @@
+# SOTTRATTORE 4 BIT
+#
+# Esegue la sottrazione in complemento a 2 tra A e B.
+# O e' il risultato
+
+.model sottrattore4b
+.inputs A3 A2 A1 A0 B3 B2 B1 B0
+.outputs OVERFLOW O3 O2 O1 O0
+
+# Importa not a 1 bit e sommatore a 8 bit
+.search base/not1b.blif
+.search sommatore/sommatore4b.blif
+.search costanti/zero1b.blif
+.search costanti/uno1b.blif
+
+.subckt zero1b O=zero
+.subckt uno1b O=uno
+
+# Nega i bit di B
+.subckt not1b A=B0 O=INV0
+.subckt not1b A=B1 O=INV1
+.subckt not1b A=B2 O=INV2
+.subckt not1b A=B3 O=INV3
+
+# Somma 1 al negato di B
+.subckt sommatore4b CIN=zero A3=zero A2=zero A1=zero A0=uno B3=INV3 B2=INV2 B1=INV1 B0=INV0 O3=COMP3 O2=COMP2 O1=COMP1 O0=COMP0
+
+# Somma A e il complemento 2 di B
+.subckt sommatore4b CIN=zero A3=A3 A2=A2 A1=A1 A0=A0 B3=COMP3 B2=COMP2 B1=COMP1 B0=COMP0 O3=O3 O2=O2 O1=O1 O0=O0 COUT=OVERFLOW
+
+.end
